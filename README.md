@@ -97,7 +97,3 @@ VITE_OPENWEATHER_API_KEY=your_openweather_api_key
 - Do not commit `.env` or `.env.local` files.
 - `frontend/dist/` is build output and is not part of source control.
 - `backend/.env` and `frontend/.env` should contain only local secrets.
-
-## Cleanup
-
-Removed unnecessary build/test files from the repository and added proper ignore rules for environment files and build artifacts.
