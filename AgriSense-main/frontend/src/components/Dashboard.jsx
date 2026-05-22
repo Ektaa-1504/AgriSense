@@ -29,11 +29,9 @@ import { useLanguage } from "../contexts/LanguageContext";
 
 // API endpoints from environment variables
 const OPENWEATHER_API_KEY =
-  import.meta.env.VITE_OPENWEATHER_API_KEY ||
-  "YOUR_OPENWEATHER_API_KEY_HERE";
+  import.meta.env.VITE_OPENWEATHER_API_KEY || "YOUR_OPENWEATHER_API_KEY_HERE";
 const GEMINI_API_KEY =
-  import.meta.env.VITE_GEMINI_API_KEY ||
-  "YOUR_GEMINI_API_KEY_HERE";
+  import.meta.env.VITE_GEMINI_API_KEY || "YOUR_GEMINI_API_KEY_HERE";
 
 // All the helper functions from the original Home component
 const fetchWeatherData = async (lat, lon) => {
@@ -542,23 +540,88 @@ const fetchCropPrices = async (latitude, longitude) => {
     console.error("Error fetching crop prices from API:", error);
     // Fallback to dynamic mock data if API fails
     console.log("Falling back to local dynamic mock crop prices");
-    
-    const isNorthIndia = ["uttar pradesh", "delhi", "haryana", "punjab"].some(s => location.city?.toLowerCase().includes(s) || (location.state || "").toLowerCase().includes(s));
-    
-    const dynamicCrops = isNorthIndia ? [
-      { name: "Sugarcane", nameLocal: "गन्ना", price: 350, unit: "₹/quintal", market: `${location.city} Mandi`, change: 1.5, trend: "up" },
-      { name: "Wheat", nameLocal: "गेहूं", price: 2450, unit: "₹/quintal", market: `${location.city} Market`, change: 0.8, trend: "up" },
-      { name: "Mustard", nameLocal: "सरसों", price: 5600, unit: "₹/quintal", market: `${location.city} APMC`, change: -0.5, trend: "down" },
-      { name: "Potato", nameLocal: "आलू", price: 1200, unit: "₹/quintal", market: `${location.city} Mandi`, change: 2.1, trend: "up" }
-    ] : [
-      { name: "Rice (Paddy)", nameLocal: "നെല്ല്", price: 2850, unit: "₹/quintal", market: `${location.city} APMC`, change: 2.5, trend: "up" },
-      { name: "Coconut", nameLocal: "തേങ്ങ", price: 12000, unit: "₹/1000 nuts", market: `${location.city} Market`, change: -1.2, trend: "down" },
-      { name: "Soya Bean", nameLocal: "സോയാബീൻ", price: 4200, unit: "₹/quintal", market: `${location.city} APMC`, change: 0.5, trend: "stable" }
-    ];
+
+    const isNorthIndia = ["uttar pradesh", "delhi", "haryana", "punjab"].some(
+      (s) =>
+        location.city?.toLowerCase().includes(s) ||
+        (location.state || "").toLowerCase().includes(s),
+    );
+
+    const dynamicCrops = isNorthIndia
+      ? [
+          {
+            name: "Sugarcane",
+            nameLocal: "गन्ना",
+            price: 350,
+            unit: "₹/quintal",
+            market: `${location.city} Mandi`,
+            change: 1.5,
+            trend: "up",
+          },
+          {
+            name: "Wheat",
+            nameLocal: "गेहूं",
+            price: 2450,
+            unit: "₹/quintal",
+            market: `${location.city} Market`,
+            change: 0.8,
+            trend: "up",
+          },
+          {
+            name: "Mustard",
+            nameLocal: "सरसों",
+            price: 5600,
+            unit: "₹/quintal",
+            market: `${location.city} APMC`,
+            change: -0.5,
+            trend: "down",
+          },
+          {
+            name: "Potato",
+            nameLocal: "आलू",
+            price: 1200,
+            unit: "₹/quintal",
+            market: `${location.city} Mandi`,
+            change: 2.1,
+            trend: "up",
+          },
+        ]
+      : [
+          {
+            name: "Rice (Paddy)",
+            nameLocal: "നെല്ല്",
+            price: 2850,
+            unit: "₹/quintal",
+            market: `${location.city} APMC`,
+            change: 2.5,
+            trend: "up",
+          },
+          {
+            name: "Coconut",
+            nameLocal: "തേങ്ങ",
+            price: 12000,
+            unit: "₹/1000 nuts",
+            market: `${location.city} Market`,
+            change: -1.2,
+            trend: "down",
+          },
+          {
+            name: "Soya Bean",
+            nameLocal: "സോയാബീൻ",
+            price: 4200,
+            unit: "₹/quintal",
+            market: `${location.city} APMC`,
+            change: 0.5,
+            trend: "stable",
+          },
+        ];
 
     return {
       location: `${location.city || "Unknown"}, ${location.state || "India"} (Local)`,
-      prices: dynamicCrops.map(c => ({ ...c, lastUpdated: new Date().toISOString() })),
+      prices: dynamicCrops.map((c) => ({
+        ...c,
+        lastUpdated: new Date().toISOString(),
+      })),
       lastUpdated: new Date().toISOString(),
     };
   }
@@ -607,10 +670,10 @@ const fetchKrishiSevaKendraData = async (latitude, longitude) => {
     console.error("Error fetching Krishi Seva Kendra data from API:", error);
     // Fallback to dynamic mock data if API fails
     console.log("Falling back to local dynamic Krishi Seva Kendra data");
-    
+
     const displayState = location.state || "Your Region";
     const displayCity = location.city || "Nearby";
-    
+
     const mockCenters = [
       {
         name: `${displayCity} Krishi Seva Kendra`,
@@ -621,11 +684,16 @@ const fetchKrishiSevaKendraData = async (latitude, longitude) => {
         pincode: "000000",
         phone: "+91-1800-180-1551",
         email: `contact@agrisense.gov.in`,
-        services: ["Soil Testing", "Crop Advisory", "Seed Distribution", "Fertilizer Guidance"],
+        services: [
+          "Soil Testing",
+          "Crop Advisory",
+          "Seed Distribution",
+          "Fertilizer Guidance",
+        ],
         coordinates: { latitude: latitude + 0.01, longitude: longitude + 0.01 },
         workingHours: "9:00 AM - 5:00 PM (Mon-Fri)",
         officerName: "Regional Agricultural Officer",
-        distance: 2.5
+        distance: 2.5,
       },
       {
         name: `${displayState} Regional Hub`,
@@ -640,8 +708,8 @@ const fetchKrishiSevaKendraData = async (latitude, longitude) => {
         coordinates: { latitude: latitude - 0.02, longitude: longitude - 0.02 },
         workingHours: "9:00 AM - 5:00 PM (Mon-Fri)",
         officerName: "District Officer",
-        distance: 5.8
-      }
+        distance: 5.8,
+      },
     ];
 
     return {
@@ -734,7 +802,10 @@ function Dashboard({ location, crop, onBack }) {
   const handleFetchCropPrices = async () => {
     setCropPricesLoading(true);
     try {
-      const prices = await fetchCropPrices(location.latitude, location.longitude);
+      const prices = await fetchCropPrices(
+        location.latitude,
+        location.longitude,
+      );
       setCropPricesData(prices);
     } catch (error) {
       console.error("Error fetching crop prices:", error);
@@ -1816,8 +1887,7 @@ function Dashboard({ location, crop, onBack }) {
                     <div className="flex items-center gap-2 mb-2">
                       <MapPin className="w-4 h-4 text-blue-600" />
                       <span>
-                        Your Location:{" "}
-                        {location.city}, {location.country}
+                        Your Location: {location.city}, {location.country}
                       </span>
                     </div>
                     <p>

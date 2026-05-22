@@ -18,8 +18,7 @@ import "../styles/farm-background.css";
 
 // API endpoints from environment variables
 const OPENWEATHER_API_KEY =
-  import.meta.env.VITE_OPENWEATHER_API_KEY ||
-  "YOUR_OPENWEATHER_API_KEY_HERE";
+  import.meta.env.VITE_OPENWEATHER_API_KEY || "YOUR_OPENWEATHER_API_KEY_HERE";
 
 // Geocode a location string to coordinates
 const geocodeLocation = async (locationString) => {

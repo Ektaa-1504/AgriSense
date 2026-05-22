@@ -27,11 +27,9 @@ import { useLanguage } from "../contexts/LanguageContext";
 
 // API endpoints from environment variables
 const OPENWEATHER_API_KEY =
-  import.meta.env.VITE_OPENWEATHER_API_KEY ||
-  "YOUR_OPENWEATHER_API_KEY_HERE";
+  import.meta.env.VITE_OPENWEATHER_API_KEY || "YOUR_OPENWEATHER_API_KEY_HERE";
 const GEMINI_API_KEY =
-  import.meta.env.VITE_GEMINI_API_KEY ||
-  "YOUR_GEMINI_API_KEY_HERE";
+  import.meta.env.VITE_GEMINI_API_KEY || "YOUR_GEMINI_API_KEY_HERE";
 
 // Get user's current location
 const getCurrentLocation = () => {
